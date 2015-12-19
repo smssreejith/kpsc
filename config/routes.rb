@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'exams/index'
+
+  get 'exams/show'
+
   resources :exams
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -9,6 +13,7 @@ Rails.application.routes.draw do
   root 'exams#index'
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'logout', to: 'sessions#destroy'
+  post 'upload_data' => 'exams#upload_data'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

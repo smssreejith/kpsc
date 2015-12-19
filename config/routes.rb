@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'logout', to: 'sessions#destroy'
   post 'upload_data' => 'exams#upload_data'
+  post 'booklet' => 'exams#booklet'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

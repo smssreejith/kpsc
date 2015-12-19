@@ -1,12 +1,16 @@
 class ExamsController < ApplicationController
   def index
-    @exams = Exam.order(id: :desc).paginate(:page => params[:page], :per_page => 30)
+    @exams = Exam.order(id: :desc).paginate(:page => params[:page], :per_page => 5)
   end
 
   def new
   end
 
   def edit
+  end
+
+  def show
+    @exam = Exam.find(params[:id])
   end
 
   def upload_data
@@ -23,5 +27,10 @@ class ExamsController < ApplicationController
     end
     Answer.import column, values
     redirect_to root_url
+  end
+  
+  def booklet
+    @book = params[:booklet]
+    @exam_id = params[:exam_id]
   end
 end

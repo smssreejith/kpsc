@@ -7,25 +7,6 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Kpsc</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=687962841337520";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
 <nav class="navbar navbar-default navbar-static-top" style="margin-bottom:0px">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -52,8 +33,13 @@
       </form>
       
         <ul class="nav navbar-nav navbar-right">
-            <li style="padding:12px;padding-right:50px;"><a href="#" style="padding:0px;"><div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div></a></li>
-           <!-- <li><%# link_to image_tag("ZW4QC.png", height: 35), "/auth/facebook", id: "sign_in" %></li> -->
+            <li style="padding:12px;padding-right:50px;">
+            <% if is_logged_in? %>
+                <%= link_to image_tag("logout.png"), logout_url %>
+            <% else %>
+               <%= link_to image_tag("facebook.png"), "/auth/facebook", id: "sign_in" %>
+            <% end %>
+            </li>
         </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -62,13 +48,13 @@
  <div class="col-lg-12 col-sm-12"> 
     <div class="card hovercard">
         <div class="card-background">
-        	<%= image_tag "ID-10086141.jpg" %>
+        	<%= image_tag is_logged_in? ? current_user.image : "ID-10086141.jpg" %>
             <!-- http://lorempixel.com/850/280/people/9/ -->
         </div>
         <div class="useravatar">
-        	<%= image_tag "ID-10086141.jpg" %>
+        	<%= image_tag is_logged_in? ? current_user.image : "ID-10086141.jpg" %>
         </div>
-        <div class="card-info"> <span class="card-title">Guest User</span>
+        <div class="card-info"> <span class="card-title"><%= is_logged_in? ? current_user.name : "Guest User #{rand(0..999999)}" %></span>
 
         </div>
     </div>

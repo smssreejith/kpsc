@@ -1,5 +1,6 @@
 class ExamsController < ApplicationController
   def index
+    @exams = Exam.order(id: :desc).paginate(:page => params[:page], :per_page => 30)
   end
 
   def new

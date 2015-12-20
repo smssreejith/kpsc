@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151220050400) do
+ActiveRecord::Schema.define(version: 20151220080846) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "exam_id",    limit: 4
@@ -30,9 +30,10 @@ ActiveRecord::Schema.define(version: 20151220050400) do
     t.integer  "total",      limit: 4
     t.integer  "correct",    limit: 4
     t.integer  "wrong",      limit: 4
-    t.decimal  "mark",                 precision: 5, scale: 2
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.decimal  "mark",                   precision: 5, scale: 2
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.string   "role",       limit: 255
   end
 
   create_table "exams", force: :cascade do |t|
@@ -44,6 +45,11 @@ ActiveRecord::Schema.define(version: 20151220050400) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "guest_users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_answers", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
     t.integer  "exam_id",    limit: 4
@@ -52,6 +58,7 @@ ActiveRecord::Schema.define(version: 20151220050400) do
     t.string   "answer",     limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "role",       limit: 255
   end
 
   create_table "users", force: :cascade do |t|
@@ -64,6 +71,8 @@ ActiveRecord::Schema.define(version: 20151220050400) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "email",      limit: 255
+    t.string   "role",       limit: 255
+    t.string   "location",   limit: 255
   end
 
 end

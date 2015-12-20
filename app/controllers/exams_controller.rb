@@ -1,4 +1,5 @@
 class ExamsController < ApplicationController
+  before_action :initialize_web
   def index
     @exams = Exam.order(id: :desc).paginate(:page => params[:page], :per_page => 5)
   end
@@ -38,10 +39,11 @@ class ExamsController < ApplicationController
   def booklet_create
     exam_id = params[:exam_id]
     book = params[:booklet]
-    col = [:user_id, :exam_id, :booklet, :q_num, :answer]
+    col = [:user_id, :exam_id, :booklet, :q_num, :answer, :role]
     values = []
+    role = current_user.role
     params[:q_num].each do |q_num, ans|    
-      values.push [current_user.id, exam_id, book, q_num, ans[:answer]]
+      values.push [current_user.id, exam_id, book, q_num, ans[:answer], role]
     end
     UserAnswer.import col, values
     @total_count = 0
@@ -64,6 +66,6 @@ class ExamsController < ApplicationController
     end
     @cancelled_count = @total_count - (@correct_count + @wrong_count)
     @mark = (@correct_count - (@wrong_count.to_f/3)).round(2)
-    ExamRank.create(:user_id => current_user.id, :exam_id => exam_id, :total => @total_count, :correct => @correct_count, :wrong => @wrong_count, :mark => @mark)
+    ExamRank.create(:user_id => current_user.id, :exam_id => exam_id, :total => @total_count, :correct => @correct_count, :wrong => @wrong_count, :mark => @mark, :role => current_user.role)
   end
 end

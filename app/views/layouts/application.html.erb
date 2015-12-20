@@ -54,7 +54,7 @@
         <div class="useravatar">
         	<%= image_tag is_logged_in? ? current_user.image : "ID-10086141.jpg" %>
         </div>
-        <div class="card-info"> <span class="card-title"><%= is_logged_in? ? current_user.name : "Guest User #{rand(0..999999)}" %></span>
+        <div class="card-info"> <span class="card-title"><%= is_logged_in? ? current_user.name : "Guest User #{current_user.id}" %></span>
 
         </div>
     </div>

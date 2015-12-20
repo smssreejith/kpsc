@@ -3,10 +3,17 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  def initialize_web
+    unless cookies.signed[:user_id]
+       GuestUser.create
+       cookies.permanent.signed[:user_id] = GuestUser.last.id
+    end
+    session[:guest_user_id] = cookies.signed[:user_id]
+  end 
   private
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
+    @current_user ||= session[:user_id] ? User.find_by(id: session[:user_id]) : GuestUser.find_by(id: session[:guest_user_id])
   end
 
   def is_logged_in?

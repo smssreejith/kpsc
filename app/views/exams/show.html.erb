@@ -1,0 +1,9 @@
+<h2><%= @exam.name %></h2>
+<h4><%= @exam.exam_type %></h4>
+<h4><%= @exam.code %></h4>
+<h4><%= @exam.date %></h4>
+<%= form_tag({:action => 'booklet'}) do %>
+  <label for="Booklet">Select Booklet <%= select_tag :booklet, options_for_select(["A","B","C","D"]) %></label>
+  <%= hidden_field_tag :exam_id, @exam.id %>
+  <%= submit_tag("Submit") %>
+<% end %>

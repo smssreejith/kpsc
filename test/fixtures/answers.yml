@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  exam_id: 1
+  one: MyString
+  two: MyString
+  three: MyString
+  four: MyString
+
+two:
+  exam_id: 1
+  one: MyString
+  two: MyString
+  three: MyString
+  four: MyString

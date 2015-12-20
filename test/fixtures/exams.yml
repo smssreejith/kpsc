@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  exam_type: MyString
+  code: MyString
+  name: MyString
+  date: MyString
+
+two:
+  exam_type: MyString
+  code: MyString
+  name: MyString
+  date: MyString

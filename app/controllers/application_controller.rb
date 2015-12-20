@@ -8,7 +8,10 @@ class ApplicationController < ActionController::Base
        GuestUser.create
        cookies.permanent.signed[:user_id] = GuestUser.last.id
     end
-    session[:guest_user_id] = cookies.signed[:user_id]
+    session[:guest_user_id] = cookies.signed[:user_id] unless is_logged_in?
+    role = is_guest_user? ? 'guest' : 'normal'
+    user_exam = UserAnswer.select(:exam_id).distinct.where(:user_id => current_user.id, :role => role)
+    @attempt_exams = Exam.where(:id => user_exam).paginate(:page => params[:page], :per_page => 5)
   end 
   private
 
@@ -19,7 +22,9 @@ class ApplicationController < ActionController::Base
   def is_logged_in?
     return true if session[:user_id]
   end
-
-  helper_method :current_user, :is_logged_in?
+  def is_guest_user?
+    return true if session[:guest_user_id]
+  end
+  helper_method :current_user, :is_logged_in?, :is_guest_user?
 
 end

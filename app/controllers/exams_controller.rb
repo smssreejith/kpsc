@@ -1,5 +1,6 @@
 class ExamsController < ApplicationController
   before_action :initialize_web
+
   def index
     @exams = Exam.order(id: :desc).paginate(:page => params[:page], :per_page => 5)
   end
@@ -36,8 +37,9 @@ class ExamsController < ApplicationController
     @user_answer = UserAnswer.new
   end
 
-  def booklet_create
+  def exam_result
     exam_id = params[:exam_id]
+    @exam = Exam.find(params[:exam_id])
     book = params[:booklet]
     col = [:user_id, :exam_id, :booklet, :q_num, :answer, :role]
     values = []

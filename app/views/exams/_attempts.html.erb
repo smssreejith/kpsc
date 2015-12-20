@@ -1,0 +1,7 @@
+<ul>
+<% @attempt_exams.each do |exam| %>
+  <li> <%= link_to exam.name, exam_url(exam) %></li>
+<% end %>
+</ul>
+<%= will_paginate @attempt_exams %>
+

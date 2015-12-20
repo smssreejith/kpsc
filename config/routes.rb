@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy'
   post 'upload_data' => 'exams#upload_data'
   post 'booklet' => 'exams#booklet'
+  post 'booklet_create' => 'exams#booklet_create'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

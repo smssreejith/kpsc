@@ -1,15 +1,22 @@
 <h4><%= @exam.name %></h4>
-<table><tr><th>Q no.</th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
-<%= form_tag ({:action => 'exam_result'}) do %>
-<% for no in 1..100 %>
-  <tr><td><%= no %></td>
-  <td><%= radio_button_tag "q_num[#{no}][answer]", "A" %></td>
-  <td><%= radio_button_tag "q_num[#{no}][answer]", "B" %></td>
-  <td><%= radio_button_tag "q_num[#{no}][answer]", "C" %></td>
-  <td><%= radio_button_tag "q_num[#{no}][answer]", "D" %></td></tr>
-<% end %>
-<%= hidden_field_tag :booklet, @book %>
-<%= hidden_field_tag :exam_id, @exam.id %>
-<%= submit_tag "Submit" %>
-<% end %>
-</table>
+<div class="row">
+	<%= form_tag ({:action => 'exam_result'}) do %>
+		<% j= 1; 4.times do %>
+			<div class="col-md-3">
+				<table class="table table-striped"><tr><th>Q no.</th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+					<% for no in j..(j+24) %>
+					  <tr><td><%= no %></td>
+					  <td><%= radio_button_tag "q_num[#{no}][answer]", "A" %></td>
+					  <td><%= radio_button_tag "q_num[#{no}][answer]", "B" %></td>
+					  <td><%= radio_button_tag "q_num[#{no}][answer]", "C" %></td>
+					  <td><%= radio_button_tag "q_num[#{no}][answer]", "D" %></td></tr>
+					<% end %>
+				</table>
+			</div>
+			<% j += 25 %>
+		<% end %> 
+		<%= hidden_field_tag :booklet, @book %>
+		<%= hidden_field_tag :exam_id, @exam.id %>
+		<%= submit_tag "Submit", class: "btn btn-primary btn-sm" %>
+	<% end %>	
+</div>

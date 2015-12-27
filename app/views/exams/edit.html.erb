@@ -1,2 +1,24 @@
-<h1>Exams#edit</h1>
-<p>Find me in app/views/exams/edit.html.erb</p>
+<h4><%= @exam.name %></h4>
+<div class="row">
+	<%= form_tag ({:action => 'exam_result'}) do %>
+		<% j= 1; 4.times do %>
+		  <div class="col-md-3">
+				<table class="table table-striped"><tr><th>Q no.</th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+					<% for no in j..(j+24) %>
+						<% selected = @user_answers.where(:q_num => no).blank? ? nil : @user_answers.where(:q_num => no).first.answer %>
+					  <td><%= no %></td>
+					  <td><%= radio_button_tag "q_num[#{no}][answer]", "A", (true if selected == "A") %></td>
+					  <td><%= radio_button_tag "q_num[#{no}][answer]", "B", (true if selected == "B") %></td>
+					  <td><%= radio_button_tag "q_num[#{no}][answer]", "C", (true if selected == "C") %></td>
+					  <td><%= radio_button_tag "q_num[#{no}][answer]", "D", (true if selected == "D") %></td></tr>
+		  		<% end %>
+				</table>
+			</div>
+			<% j += 25 %>
+    <% end %>
+			<%= hidden_field_tag :booklet, @user_answers.first.booklet %>
+			<%= hidden_field_tag :exam_id, @exam.id %>
+			<%= submit_tag "Submit" %>	
+	<% end %>
+</div>
+

@@ -2,13 +2,17 @@ class ExamsController < ApplicationController
   before_action :initialize_web
 
   def index
-    @exams = Exam.order(id: :desc).paginate(:page => params[:page], :per_page => 5)
+    @q = Exam.order(id: :desc).search(params[:q])
+    @exams = @q.result().paginate(:page => params[:page], :per_page => 5) 
+  # @exams = Exam.order(id: :desc).paginate(:page => params[:page], :per_page => 5)
   end
 
   def new
   end
 
   def edit
+    @exam = Exam.find(params[:id])
+    @user_answers = UserAnswer.where(:exam_id => params[:id], :user_id => current_user.id)
   end
 
   def show
@@ -47,7 +51,7 @@ class ExamsController < ApplicationController
     params[:q_num].each do |q_num, ans|    
       values.push [current_user.id, exam_id, book, q_num, ans[:answer], role]
     end
-    UserAnswer.import col, values
+    UserAnswer.import col, values, :on_duplicate_key_update => [:answer]
     @total_count = 0
     @correct_count = 0
     @wrong_count = 0
@@ -68,6 +72,8 @@ class ExamsController < ApplicationController
     end
     @cancelled_count = @total_count - (@correct_count + @wrong_count)
     @mark = (@correct_count - (@wrong_count.to_f/3)).round(2)
-    ExamRank.create(:user_id => current_user.id, :exam_id => exam_id, :total => @total_count, :correct => @correct_count, :wrong => @wrong_count, :mark => @mark, :role => current_user.role)
+    rank_col = [:user_id, :exam_id, :total, :correct, :wrong, :mark, :role]
+    rank_val = [[current_user.id, exam_id, @total_count, @correct_count, @wrong_count, @mark, current_user.role]]
+    ExamRank.import rank_col, rank_val, :on_duplicate_key_update => [:total, :correct, :wrong, :mark]
   end
 end

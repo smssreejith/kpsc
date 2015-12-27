@@ -2,8 +2,25 @@
 <h4><%= @exam.exam_type %></h4>
 <h4><%= @exam.code %></h4>
 <h4><%= @exam.date %></h4>
-<%= form_tag({:action => 'booklet'}) do %>
-  <label for="Booklet">Select Booklet <%= select_tag :booklet, options_for_select(["A","B","C","D"]) %></label>
-  <%= hidden_field_tag :exam_id, @exam.id %>
-  <%= submit_tag("Submit") %>
+<% mark = ExamRank.where(:exam_id => @exam.id, :user_id => current_user.id, :role => current_user.role).first %>
+<% if mark %>
+	Correct Answers <%= mark.correct %><br />
+	Wrong Answers <%= mark.wrong %><br />
+	Score <%= mark.mark %><br />
+	<% if current_user.role == 'normal' %>
+		<%= link_to "Edit", edit_exam_path(@exam), class: "btn btn-primary btn-sm" %>&nbsp;
+		<%= link_to "Rank", ranklist_url(@exam), class: "btn btn-primary btn-sm"  %>
+	<% else %>
+		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Edit</button>&nbsp;
+		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Rank</button>
+	<%= render 'fb_login.erb'%>
+	<% end %>
+	
+
+<% else %>
+	<%= form_tag({:action => 'booklet'}) do %>
+	  <label for="Booklet">Select Booklet <%= select_tag :booklet, options_for_select(["A","B","C","D"]) %></label>
+	  <%= hidden_field_tag :exam_id, @exam.id %>
+	  <%= submit_tag("Submit") %>
+	<% end %>
 <% end %>

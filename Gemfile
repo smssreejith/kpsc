@@ -30,6 +30,8 @@ gem 'roo', '~> 2.1.0'
 gem 'activerecord-import'
 
 gem 'will_paginate', '~> 3.0.6'
+
+gem 'ransack'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

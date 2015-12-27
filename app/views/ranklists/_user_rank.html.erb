@@ -3,29 +3,31 @@
 <% @exam_ids.each do |ids| %>
 <div class="col-md-3"><table class="table table-striped">
     <tr><%= link_to truncate(Exam.find(ids).name), ranklist_url(ids) %></tr>
-    <% user_mark ||= @ranks.where(:exam_id => ids, :user_id =>current_user.id).first.mark %>
-    <% top_count = @ranks.where(:exam_id => ids).where("mark > ?", user_mark).count %>
-    <% total_count = @ranks.where(:exam_id => ids).count %>
-    <% bottom_count = total_count - top_count - 1 %>
-    <% if total_count <= 11 || top_count <= 5 %> 
-	      <% @ranks.where(:exam_id => ids).order(mark: :desc).limit(11).each do |rank| %>
-	       <tr><th><%= i %></th><th><%= rank.user.name %></th><tr>
-	       <% i +=1 %>
-	      <% end %>
-    <% else %>
-	    <% top_mark = @ranks.where(:exam_id => ids).where("mark >= ?", user_mark).order(:mark).fourth.mark if top_count > 5 %>
-	    <% if top_count > 5 && bottom_count > 5 %>
-		    <% @ranks.where(:exam_id => ids).where("mark <= ?", top_mark).order(mark: :desc).limit(11).each do |rank| %>
-		       <tr><th><%= top_count - 4 %></th><th><%= rank.user.name %></th></tr>
-		       <% top_count +=1 %>
-		    <% end %>
-		  <% else %>
-			   <% @ranks.where(:exam_id => ids).order(mark: :desc).offset(total_count - 11).limit(11).each do |rank| %>
-			      <tr><th><%= total_count - 10 %></th><th><%= rank.user.name %></th></tr>
-			      <% total_count +=1 %>
-			   <% end %>
-      <% end %>
-	  <% end %>
+    <% unless @ranks.blank? %>
+	    <% user_mark ||= @ranks.where(:exam_id => ids, :user_id =>current_user.id).first.mark %>
+	    <% top_count = @ranks.where(:exam_id => ids).where("mark > ?", user_mark).count %>
+	    <% total_count = @ranks.where(:exam_id => ids).count %>
+	    <% bottom_count = total_count - top_count - 1 %>
+	    <% if total_count <= 11 || top_count <= 5 %> 
+		      <% @ranks.where(:exam_id => ids).order(mark: :desc).limit(11).each do |rank| %>
+		       <tr><td valign="middle"><%= i %></td><td><%= image_tag rank.user.image, size: "32" %><%= rank.user.name %></td><tr>
+		       <% i +=1 %>
+		      <% end %>
+	    <% else %>
+		    <% top_mark = @ranks.where(:exam_id => ids).where("mark >= ?", user_mark).order(:mark).fourtd.mark if top_count > 5 %>
+		    <% if top_count > 5 && bottom_count > 5 %>
+			    <% @ranks.where(:exam_id => ids).where("mark <= ?", top_mark).order(mark: :desc).limit(11).each do |rank| %>
+			       <tr><td><%= top_count - 4 %></td><td><%= image_tag rank.user.image, size: "32" %><%= rank.user.name %></td></tr>
+			       <% top_count +=1 %>
+			    <% end %>
+			  <% else %>
+				   	<% @ranks.where(:exam_id => ids).order(mark: :desc).offset(total_count - 11).limit(11).each do |rank| %>
+				      <tr><td><%= total_count - 10 %></td><td><%= image_tag rank.user.image, size: "32" %><%= rank.user.name %></td></tr>
+				      <% total_count +=1 %>
+				    <% end %>
+	    	<% end %>
+		  <% end %>
+		<% end %>
 	<% i = 1 %>
 	</table></div>
 <% end %>

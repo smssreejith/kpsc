@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'admin/index'
+
   resources :ranklists
 
   resources :attempts
@@ -13,7 +15,7 @@ Rails.application.routes.draw do
   root 'exams#index'
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'logout', to: 'sessions#destroy'
-  post 'upload_data' => 'exams#upload_data'
+  post 'upload_data' => 'admin#upload_data'
   post 'booklet' => 'exams#booklet'
   post 'exam_result' => 'exams#exam_result'
   # Example of regular route:

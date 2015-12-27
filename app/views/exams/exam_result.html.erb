@@ -1,6 +1,14 @@
-<%= @exam.name %><br />
-Correct Answers <%= @correct_count %><br />
-Wrong Answers <%= @wrong_count %><br />
-Score <%= @mark %><br />
-<h4>Know your rank</h4>
-<%= link_to image_tag("fb_login.png"), 'auth/facebook' %>
+<h2><%= @exam.name %></h2>
+<table class="table table-striped">
+<tr><th>Correct Answers</th><th><%= @correct_count %></th></tr>
+<tr><th>Wrong Answers</th><th><%= @wrong_count %></th></tr>
+<tr><th>Score</th><th><%= @mark %></th></tr>
+</table>
+<% if current_user.role == 'normal' %>
+		<%= link_to "Edit", edit_exam_path(@exam), class: "btn btn-primary btn-sm" %>&nbsp;
+		<%= link_to "Rank", ranklist_url(@exam), class: "btn btn-primary btn-sm"  %>
+	<% else %>
+		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Edit</button>&nbsp;
+		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Rank</button>
+	<%= render 'fb_login.erb'%>
+<% end %>

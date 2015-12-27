@@ -4,9 +4,11 @@
 <h4><%= @exam.date %></h4>
 <% mark = ExamRank.where(:exam_id => @exam.id, :user_id => current_user.id, :role => current_user.role).first %>
 <% if mark %>
-	Correct Answers <%= mark.correct %><br />
-	Wrong Answers <%= mark.wrong %><br />
-	Score <%= mark.mark %><br />
+<table class="table table-striped">
+	<tr><th>Correct Answers</th><th><%= mark.correct %></th></tr>
+	<tr><th>Wrong Answers </th><th><%= mark.wrong %></th></tr>
+	<tr><th>Score </th><th><%= mark.mark %></th></tr>
+</table>
 	<% if current_user.role == 'normal' %>
 		<%= link_to "Edit", edit_exam_path(@exam), class: "btn btn-primary btn-sm" %>&nbsp;
 		<%= link_to "Rank", ranklist_url(@exam), class: "btn btn-primary btn-sm"  %>

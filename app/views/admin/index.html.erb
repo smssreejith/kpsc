@@ -1,0 +1,4 @@
+<%= form_tag({:action => 'upload_data'}, :multipart => true, :name => 'upload_xlxs') do %>
+  <label for="uploaded_file">File to Upload <%= file_field_tag 'uploaded_file', :accept => 'xls/xlxs'%></label>
+  <%= submit_tag("Submit") %>
+<% end %>

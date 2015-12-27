@@ -1,10 +1,14 @@
-<h4><%= Exam.find(params[:id]).name %></h4>
-<%= render partial: 'user_rank' %>
-<div class="col-md-3"><table class="table table-striped">
-	<tr><%= link_to "Overall Rank", "#" %></tr>
-	<% i = 1 %>
-	<% @ranks.order(mark: :desc).limit(11).each do |rank| %>
-	   <tr><th><%= i %></th><th><%= rank.user.name %></th></tr>
-	   <% i +=1 %>
-	<% end %>
-</table></div></div>
+<%if current_user.role == 'normal' %>
+	<h4><%= Exam.find(params[:id]).name %></h4>
+	<%= render partial: 'user_rank' %>
+	<div class="col-md-3"><table class="table table-striped">
+		<tr><%= link_to "Overall Rank", "#" %></tr>
+		<% i = 1 %>
+		<% @ranks.order(mark: :desc).limit(11).each do |rank| %>
+		   <tr><td><%= i %></td><td><%= image_tag rank.user.image, size: "32" %><%= rank.user.name %></td></tr>
+		   <% i +=1 %>
+		<% end %>
+	</table></div></div>
+<% else %>
+	<%= link_to image_tag("fb_login.png", style: "display: block;margin-left:auto;margin-right:auto;") %>
+<% end %>

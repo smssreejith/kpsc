@@ -1,5 +1,5 @@
 # Change these
-server '104.131.23.16', port: 80, roles: [:web, :app, :db], primary: true
+server '104.131.23.16', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:smssreejith/kpsc.git'
 set :application,     'kpsc'

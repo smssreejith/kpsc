@@ -1,7 +1,7 @@
 # Change these
 server '104.131.23.16', port: 80, roles: [:web, :app, :db], primary: true
 
-set :repo_url,        'https://github.com/smssreejith/kpsc.git'
+set :repo_url,        'git@github.com:smssreejith/kpsc.git'
 set :application,     'kpsc'
 set :user,            'sreejith'
 set :puma_threads,    [4, 16]

@@ -49,5 +49,6 @@ test:
 production:
   <<: *default
   database: kpsc_production
-  username: kpsc
-  password: <%= ENV['KPSC_DATABASE_PASSWORD'] %>
+  username: root
+  password: exwhyzd
+#  password: <%= ENV['KPSC_DATABASE_PASSWORD'] %>

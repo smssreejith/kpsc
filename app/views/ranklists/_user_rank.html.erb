@@ -10,7 +10,7 @@
 	    <% bottom_count = total_count - top_count - 1 %>
 	    <% if total_count <= 11 || top_count <= 5 %> 
 		      <% @ranks.where(:exam_id => ids).order(mark: :desc).limit(11).each do |rank| %>
-		       <tr><td valign="middle"><%= i %></td><td><%= image_tag rank.user.image, size: "32" %><%= rank.user.name %></td><tr>
+		       <tr><td><%= i %></td><td><%= image_tag rank.user.image, size: "32" %><%= rank.user.name %></td><tr>
 		       <% i +=1 %>
 		      <% end %>
 	    <% else %>

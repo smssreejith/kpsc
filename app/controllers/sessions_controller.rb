@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   def create
     @user = User.from_omniauth(request.env['omniauth.auth'])
     session[:user_id] = @user.id
-    @user.update_attribute(role: 'normal') unless @user.id == 1
+    @user.update_attribute(:role, 'normal') unless @user.id == 1
       exams = ExamRank.where(:user_id => session[:user_id], :role => 'normal')
       exam_ids = []
       exams.each do |ex|

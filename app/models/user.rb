@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
     user.image = auth_hash['info']['image']
     user.token = auth_hash['credentials']['token']
     user.expires_at = Time.at(auth_hash['credentials']['expires_at'])
-    user.role = 'normal'
     user.save!
     user
   end

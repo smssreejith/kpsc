@@ -1,3 +1,4 @@
+<% content_for :title, "#{@exam.name} Submit Answer for Booklet #{@book}" %>
 <h4><%= @exam.name %></h4>
 <div class="row">
 	<%= form_tag ({:action => 'exam_result'}) do %>

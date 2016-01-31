@@ -1,3 +1,4 @@
+<% content_for :title, "Kerala PSC Rank List" %>
 <ul>
 <% @attempt_exams.each do |exam| %>
   <li> <%= link_to exam.name, exam_url(exam) %></li>

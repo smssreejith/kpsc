@@ -1,3 +1,4 @@
+<% content_for :title, "Kerala PSC Ranklist" %>
 <%if current_user.role == 'normal' %>
 	<h4><%= Exam.find(params[:id]).name %></h4>
 	<%= render partial: 'user_rank' %>

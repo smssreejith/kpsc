@@ -39,7 +39,7 @@ class ExamsController < ApplicationController
     @total_count = 0
     @correct_count = 0
     @wrong_count = 0
-   UserAnswer.where(:exam_id => exam_id).each do |check|
+    UserAnswer.where(:exam_id => exam_id, :user_id => current_user.id).each do |check|
      case book
       when "A"
         booklet = Answer.where(:exam_id => exam_id, :q_num => check.q_num).where.not(:one => "X").first.one

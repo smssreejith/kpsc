@@ -64,7 +64,7 @@
             <% if is_logged_in? %>
                 <%= link_to image_tag("logout.png"), logout_url %>
             <% else %>
-               <%= link_to image_tag("facebook.png"), "/auth/facebook", id: "sign_in" %>
+               <%= link_to image_tag("facebook.png"), "/auth/facebook?display=popup", id: "sign_in" %>
             <% end %>
             </li>
         </ul>

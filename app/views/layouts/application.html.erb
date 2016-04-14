@@ -8,13 +8,41 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<script>
+  function statusChangeCallback(response) {
+    if (response.status === 'connected') {
+      window.location = '/auth/facebook/callback';
+      //testAPI();
+    } else if (response.status === 'not_authorized') {
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
+    } else {
+
+    }
+  }
+
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '1512939478999206',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.5' // use graph api version 2.5
+  });
+  FB.Event.subscribe("auth.logout", function() {window.location = '/logout'});
+
+  };
+
+  (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1512939478999206";
+    js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 </script>
@@ -62,9 +90,12 @@
         <ul class="nav navbar-nav navbar-right">
             <li style="padding:12px;padding-right:50px;">
             <% if is_logged_in? %>
-                <%= link_to image_tag("logout.png"), logout_url %>
+              <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>
+              <%# link_to image_tag("logout.png"), logout_url %>
             <% else %>
-               <%= link_to image_tag("facebook.png"), "/auth/facebook?display=popup", id: "sign_in" %>
+              <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
+              <!-- <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div> -->
+               <%# link_to image_tag("facebook.png"), "/auth/facebook", id: "sign_in" %>
             <% end %>
             </li>
         </ul>

@@ -6,11 +6,11 @@ class RanklistsController < ApplicationController
   	@user_exams.each do |val|
   		@exam_ids.push val.exam_id
     end
-    @ranks = ExamRank.where(:exam_id => @exam_ids)
+    @ranks = ExamRank.where(:exam_id => @exam_ids, :role => 'normal')
   end
 
   def show
   	@exam_ids =[params[:id]]
-    @ranks = ExamRank.where(:exam_id => params[:id])
+    @ranks = ExamRank.where(:exam_id => params[:id], :role => 'normal')
   end
 end

@@ -6,7 +6,7 @@
 		<tr><%= link_to "Overall Rank", "#" %></tr>
 		<% i = 1 %>
 		<% @ranks.order(mark: :desc).limit(11).each do |rank| %>
-      <tr><td><%= i %></td><td><%= image_tag (rank.user.image rescue ""), size: "32" %><%= rank.user.name rescue "Guest #{rank.guest_user.id}"%></td><td><%= rank.mark %></td></tr>
+		   <tr><td><%= i %></td><td><%= image_tag rank.user.image, size: "32" %><%= rank.user.name %></td></tr>
 		   <% i +=1 %>
 		<% end %>
 	</table></div></div>

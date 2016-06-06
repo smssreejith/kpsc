@@ -10,19 +10,19 @@
 	    <% bottom_count = total_count - top_count - 1 %>
 	    <% if total_count <= 11 || top_count <= 5 %> 
 		      <% @ranks.where(:exam_id => ids).order(mark: :desc).limit(11).each do |rank| %>
-		       <tr><td><%= i %></td><td><%= image_tag rank.user.image, size: "32" %><%= rank.user.name %></td><tr>
+            <tr><td><%= i %></td><td><%= image_tag (rank.user.image rescue ""), size: "32" %><%= rank.user.name rescue "Guest #{rank.guest_user.id}"%></td><tr>
 		       <% i +=1 %>
 		      <% end %>
 	    <% else %>
 		    <% top_mark = @ranks.where(:exam_id => ids).where("mark >= ?", user_mark).order(:mark).fourtd.mark if top_count > 5 %>
 		    <% if top_count > 5 && bottom_count > 5 %>
 			    <% @ranks.where(:exam_id => ids).where("mark <= ?", top_mark).order(mark: :desc).limit(11).each do |rank| %>
-			       <tr><td><%= top_count - 4 %></td><td><%= image_tag rank.user.image, size: "32" %><%= rank.user.name %></td></tr>
+			       <tr><td><%= top_count - 4 %></td><td><%= image_tag (rank.user.image rescue ""), size: "32" %><%= rank.user.name rescue "Guest #{rank.guest_user.id}"%></td></tr>
 			       <% top_count +=1 %>
 			    <% end %>
 			  <% else %>
 				   	<% @ranks.where(:exam_id => ids).order(mark: :desc).offset(total_count - 11).limit(11).each do |rank| %>
-				      <tr><td><%= total_count - 10 %></td><td><%= image_tag rank.user.image, size: "32" %><%= rank.user.name %></td></tr>
+				      <tr><td><%= total_count - 10 %></td><td><%= image_tag (rank.user.image rescue ""), size: "32" %><%= rank.user.name rescue "Guest #{rank.guest_user.id}"%></td></tr>
 				      <% total_count +=1 %>
 				    <% end %>
 	    	<% end %>
